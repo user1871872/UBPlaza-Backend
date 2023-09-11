@@ -6,17 +6,19 @@ const mongoose = require('mongoose')
 
 const productModel = require('./models/product')
 const reserveproductModel = require('./models/reserveProduct')
+const DataBase = require('./config/db')
+const dotenv = require('dotenv')
+
+dotenv.config()
+DataBase();
+
+const PORT = process.env.PORT || 4000;
+
+const server = app.listen(PORT, console.log(PORT));
 
 const cors = require('cors')
-
 app.use(express.json());
-
 app.use(cors());
-
-
-mongoose.set('strictQuery', false);
-
-mongoose.connect('mongodb+srv://ub_plaza:ZI8ZuEQDzOhgLY7Q@cluster0.itrcef0.mongodb.net/ub_plaza?retryWrites=true&w=majority')
 
 //listProducts
 app.get("/getProduct", (req, res) => {
@@ -89,8 +91,4 @@ app.get("/singleProduct/:id", (req, res) => {
             res.json(result);
         }
     });
-});
-app.listen(4000, () => {
-
-    console.log("Connected to server port 4000")
 });
